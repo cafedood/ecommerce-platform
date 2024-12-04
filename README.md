@@ -124,6 +124,7 @@ API Tests
 ```shell
 # need to install hurl first
 # under root folder: ecommerce-platform
+# it runs all tests in folder `tests_api`
 $ hurl --test . 
 ```
 ![alt text](docs/hurl_tests.png)
