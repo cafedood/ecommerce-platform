@@ -1,0 +1,49 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce_app
+    command: bash -c "bundle exec rails s -b 0.0.0.0"
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      DATABASE_URL: mongodb://mongodb:27017/ecommerce_platform_development
+      REDIS_URL: redis://redis:6379/0
+      RAILS_ENV: development
+
+  mongodb:
+    image: mongo:5.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce_sidekiq
+    command: bundle exec sidekiq
+    depends_on:
+      - redis
+      - mongodb
+    environment:
+      DATABASE_URL: mongodb://mongodb:27017/ecommerce_platform_development
+      REDIS_URL: redis://redis:6379/0
+      RAILS_ENV: development
+
+volumes:
+  mongodb_data:
