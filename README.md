@@ -46,6 +46,7 @@ The **Dynamic Pricing Engine** adjusts product prices based on three factors:
 4. **Background Jobs**
     - Periodic price adjustments using Sidekiq.
     - Integration with external Competitor Price API for price adjustments.
+    - Start background job: `bundle exec sidekiq`
 
 5. **API-Only Implementation**
     - No frontend; designed to be consumed via RESTful APIs.
@@ -72,17 +73,6 @@ The **Dynamic Pricing Engine** adjusts product prices based on three factors:
     - Creates an order and updates inventory if sufficient stock is available.
 
 ---
-
-## Background Jobs
-
-- **Dynamic Pricing Job**:
-    - Runs periodically to adjust prices based on demand, inventory, and competitor prices.
-    - Implement with Sidekiq and Redis.
-
-To start Sidekiq:
-```bash
-docker-compose exec app bundle exec sidekiq
-```
 
 ## Requirements covered 
 
